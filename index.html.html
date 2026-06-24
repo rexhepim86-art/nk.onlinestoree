@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nk.onlinestoree | Premium Online Shop</title>
+    <style>
+        /* --- STILE TË PËRGJITHSHME --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        /* --- NAVIGACIONI (HEADER) --- */
+        header {
+            background-color: #1a1a2e;
+            color: #fff;
+            padding: 20px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e94560;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #e94560;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 18px;
+            background: #e94560;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .cart-icon:hover {
+            background: #ff5270;
+        }
+
+        #cart-count {
+            background: #fff;
+            color: #1a1a2e;
+            padding: 2px 7px;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-left: 8px;
+            font-size: 14px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: linear-gradient(rgba(26, 26, 46, 0.85), rgba(26, 26, 46, 0.95)), url('11.jpg') no-repeat center center/cover;
+            height: 380px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 45px;
+            margin-bottom: 12px;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 19px;
+            color: #f5f7fa;
+            max-width: 600px;
+        }
+
+        /* --- STRUKTURA E PRODUKTEVE --- */
+        .container {
+            max-width: 1250px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: #1a1a2e;
+            margin-bottom: 30px;
+            border-left: 5px solid #e94560;
+            padding-left: 15px;
+            font-weight: 700;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 290px;
+            object-fit: cover;
+            background-color: #fff;
+        }
+
+        .product-info {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1a1a2e;
+            line-height: 1.4;
+        }
+
+        .add-to-cart-btn {
+            background-color: #1a1a2e;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #e94560;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #1a1a2e;
+            color: #fff;
+            text-align: center;
+            padding: 35px;
+            margin-top: 80px;
+            font-size: 15px;
+            border-top: 4px solid #e94560;
+        }
+
+        /* --- MODAL (SHPORTA) --- */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cart-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .cart-content h3 {
+            margin-bottom: 20px;
+            font-size: 22px;
+            color: #1a1a2e;
+        }
+
+        .close-btn {
+            background: #1a1a2e;
+            color: #fff;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.2s;
+        }
+
+        .close-btn:hover {
+            background: #e94560;
+        }
+    </style>
+</head>
+<body>
+
+  
+
+    <!-- BANNER KRYESOR -->
+    <section class="hero">
+        <h1>Mirësevini në nk.onlinestoree</h1>
+        <p>Zbuloni gamën tonë të gjerë të modeleve vape më ekskluzive dhe cilësore në treg.</p>
+    </section>
+
+    <!-- SEKSIONI I PRODUKTEVE -->
+    <main class="container">
+        <h2 class="section-title">Koleksioni i Produkteve</h2>
+        <div class="products-grid">
+            
+            <!-- Produkti 1 -->
+            <div class="product-card">
+                <img src="1.jpeg" alt="Airmez Fox 4 In 1" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Airmez Fox 4 In 1 (12000 Puffs)</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+            <!-- Produkti 2 -->
+            <div class="product-card">
+                <img src="2.jpeg" alt="Fumot Digital Box" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Fumot Digital Box</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+            <!-- Produkti 3 -->
+            <div class="product-card">
+                <img src="3.jpeg" alt="Aroma King" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Aroma King (Paketë 10 copë)</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+            <!-- Produkti 4 -->
+            <div class="product-card">
+                <img src="4.jpeg" alt="Vozol Gear Shisha 25000" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Vozol Gear Shisha 25000</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+            <!-- Produkti 5 -->
+            <div class="product-card">
+                <img src="5.jpeg" alt="Crown Bar Al Fakher 12K" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Crown Bar Al Fakher 12K Cloud Box</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+            <!-- Produkti 6 -->
+            <div class="product-card">
+                <img src="6.jpeg" alt="Al Fakher Edition Pro" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Al Fakher Edition Pro</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+            <!-- Produkti 7 -->
+            <div class="product-card">
+                <img src="7.jpeg" alt="Holster Vape Ice" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Holster Vape Ice 15K</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+            <!-- Produkti 8 -->
+            <div class="product-card">
+                <img src="8.jpeg" alt="Vozol Rave 40000 Watermelon" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Vozol Rave 40000 Watermelon Ice</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+            <!-- Produkti 9 -->
+            <div class="product-card">
+                <img src="9.jpeg" alt="Crown Bar EHose X 60K" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Crown Bar EHose X 60K Berry Ice</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+            <!-- Produkti 10 -->
+            <div class="product-card">
+                <img src="10.jpeg" alt="Movkin Ape Series" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Movkin Ape Series 30000 Puffs</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+            <!-- Produkti 11 -->
+            <div class="product-card">
+                <img src="11.jpeg" alt="Vozol Gear Shisha Blueberry Watermelon" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Vozol Gear Shisha 25K Blueberry Watermelon</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+            <!-- Produkti 12 -->
+            <div class="product-card">
+                <img src="12.jpeg" alt="Vozol Vista Series Flavors" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Vozol Vista Series (Të gjitha Shijet)</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+            <!-- Produkti 13 -->
+            <div class="product-card">
+                <img src="13.jpeg" alt="Vozol Star Edition" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Vozol Star Edition Premium</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+            <!-- Produkti 14 -->
+            <div class="product-card">
+                <img src="14.jpeg" alt="Vozol Rave 40000 Blueberry Watermelon" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Vozol Rave 40000 Blueberry Watermelon</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+            <!-- Produkti 15 -->
+            <div class="product-card">
+                <img src="15.jpeg" alt="Vozol Neon Clear Pack" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Vozol Neon Clear Eco-Pack</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+            <!-- Produkti 16 -->
+            <div class="product-card">
+                <img src="16.jpeg" alt="Airmez 6in1 Adjustable" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Airmez 6in1 Adjustable Flavors 14K</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+            <!-- Produkti 17 -->
+            <div class="product-card">
+                <img src="17.jpeg" alt="Crown Bar Al Fakher Blueberry Premium" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Al Fakher Crown Bar Blueberry Exclusive</h3>
+                    <button class="add-to-cart-btn" onclick="addToCart()">Shto në Shportë</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- MODAL (SHPORTA) -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <h3>Porosia Juaj</h3>
+            <p>Produkti u shtua me sukses në shportë.</p>
+            <button class="close-btn" onclick="toggleCart()">Mbyll</button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 nk.onlinestoree. Të gjitha të drejtat të rezervuara.</p>
+    </footer>
+
+    <!-- LOGJIKA JAVASCRIPT -->
+    <script>
+        let count = 0;
+        const cartCountEl = document.getElementById('cart-count');
+        const cartModal = document.getElementById('cartModal');
+
+        function addToCart() {
+            count++;
+            cartCountEl.innerText = count;
+            alert("Produkti u shtua në shportë me sukses!");
+        }
+
+        function toggleCart() {
+            if(cartModal.style.display === 'flex') {
+                cartModal.style.display = 'none';
+            } else {
+                cartModal.style.display = 'flex';
+            }
+        }
+    </script>
+</body>
+</html>
